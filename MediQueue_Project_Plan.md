@@ -6,7 +6,7 @@
 |---|---|
 | **Font Family** | Outfit |
 | **Primary Color** | #7C3AED (বেগুনি) |
-| **Secondary Color** | #5B21B6 (গাঢ় বেগুনি) |
+| **Secondary Color** |rgb(199, 167, 249) |
 | **Accent Color** | #22C55E (সবুজ) |
 | **Background** | #FAF5FF (হালকা বেগুনি-সাদা) |
 | **Text Color** | #1E1B4B (গাঢ় নেভি) |
