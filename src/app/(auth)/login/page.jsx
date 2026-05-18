@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { authClient } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -161,11 +161,11 @@ export default function LoginPage() {
                   Signup
                 </Button>
               </Link>
-              <Link href="/register">
-                <Button variant="outline" className="w-full border-primary">
+              
+                <Button onClick={() => signIn()} variant="outline" className="w-full border-primary">
                   Login With Google
                 </Button>
-              </Link>
+             
             </div>
           </Form>
         </div>

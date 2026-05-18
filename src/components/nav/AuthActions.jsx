@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -32,12 +33,7 @@ export default function AuthActions({ className = "", compact = false }) {
   if (session?.user) {
     return (
       <div className={`flex shrink-0 items-center gap-2 sm:gap-3 ${className}`}>
-        <Link
-          href="/profile"
-          className={`rounded-lg font-medium text-text-dark transition-colors hover:bg-primary/10 hover:text-primary ${btn}`}
-        >
-          Profile
-        </Link>
+    
         <button
           type="button"
           onClick={handleLogout}
@@ -45,6 +41,22 @@ export default function AuthActions({ className = "", compact = false }) {
         >
           Logout
         </button>
+
+         <Link
+     href={'/profile'}
+
+     >
+      <div className=" rounded-full border-2 border-primary ">
+<Image
+     src={session?.user?.image}
+     width={50}
+     height={50}
+     alt={session?.user?.name}
+     className="w-8 h-8 rounded-full object-cover object-center"
+     />
+      </div>
+     
+     </Link>
       </div>
     );
   }

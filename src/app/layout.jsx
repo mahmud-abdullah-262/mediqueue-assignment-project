@@ -1,6 +1,7 @@
 import { Outfit } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
+import Footer from "@/components/Footer";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col font-outfit bg-bg-light text-text-dark">
        
         <main className="flex-1 pb-20 lg:pb-0">{children}</main>
+        <Footer></Footer>
       </body>
     </html>
   );
