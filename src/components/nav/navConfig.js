@@ -26,7 +26,7 @@ export const mobileNavLinks = [
   { href: "/profile", label: "Profile", icon: Person },
 ];
 
-export const moreNavLinks = [
+export const moreNavLinksGuest = [
   { href: "/add-tutor", label: "Add Tutor" },
   { href: "/my-booked-sessions", label: "My Booked Sessions" },
   { href: "/login", label: "Login" },

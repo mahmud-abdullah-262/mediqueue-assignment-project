@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BottomNav from "./nav/BottomNav";
+import AuthActions from "./nav/AuthActions";
 import { mainNavLinks } from "./nav/navConfig";
 
 export default function Navbar() {
@@ -27,35 +28,8 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="hidden shrink-0 items-center gap-2 sm:gap-3 lg:flex">
-            <Link
-              href="/login"
-              className="rounded-lg px-4 py-2 text-sm font-medium text-text-dark transition-colors hover:bg-primary/10 hover:text-primary"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-secondary"
-            >
-              Register
-            </Link>
-          </div>
-
-          <div className="hidden shrink-0 items-center gap-2 md:flex lg:hidden">
-            <Link
-              href="/login"
-              className="rounded-lg px-3 py-1.5 text-sm font-medium text-text-dark transition-colors hover:text-primary"
-            >
-              Login
-            </Link>
-            <Link
-              href="/register"
-              className="rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-secondary"
-            >
-              Register
-            </Link>
-          </div>
+          <AuthActions className="hidden lg:flex" />
+          <AuthActions className="hidden md:flex lg:hidden" compact />
         </nav>
       </header>
 

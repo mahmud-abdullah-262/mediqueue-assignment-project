@@ -1,0 +1,44 @@
+{
+  "React Server Component (RSC)": {
+    "prefix": "rsc",
+    "scope": "javascript,javascriptreact",
+    "body": [
+      "export default function ${1:Component}() {",
+      "  return (",
+      "    <div className=\"p-6\">",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ],
+    "description": "Next.js React Server Component (.jsx)"
+  },
+  "React Client Component": {
+    "prefix": "rcc",
+    "scope": "javascript,javascriptreact",
+    "body": [
+      "\"use client\";",
+      "",
+      "export default function ${1:Component}() {",
+      "  return (",
+      "    <div className=\"p-6\">",
+      "      $0",
+      "    </div>",
+      "  );",
+      "}"
+    ],
+    "description": "Client component with use client directive"
+  },
+  "Next.js App Router Page": {
+    "prefix": "npage",
+    "scope": "javascript,javascriptreact",
+    "body": [
+      "export default function ${1:Page}() {",
+      "  return (",
+      "    <div className=\"p-6\">${2:Page}</div>",
+      "  );",
+      "}"
+    ],
+    "description": "App Router page.jsx template"
+  }
+}

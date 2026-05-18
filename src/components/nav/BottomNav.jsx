@@ -1,10 +1,11 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Ellipsis } from "@gravity-ui/icons";
 import { useEffect, useRef, useState } from "react";
-import { mainNavLinks, mobileNavLinks, moreNavLinks } from "./navConfig";
+import { mainNavLinks, mobileNavLinks, moreNavLinksGuest } from "./navConfig";
 
 function NavItem({ href, label, icon: Icon, isActive }) {
   return (
@@ -22,9 +23,10 @@ function NavItem({ href, label, icon: Icon, isActive }) {
   );
 }
 
-function MoreMenu({ isActive }) {
+function MoreMenu({ links, isActive }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -40,20 +42,43 @@ function MoreMenu({ isActive }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
+  const handleLogout = async () => {
+    setOpen(false);
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+          router.refresh();
+        },
+      },
+    });
+  };
+
   return (
     <div ref={menuRef} className="relative flex min-w-0 flex-1 flex-col">
       {open && (
         <div className="absolute bottom-full left-1/2 z-50 mb-2 w-52 -translate-x-1/2 rounded-xl border border-primary/15 bg-white py-2 shadow-lg">
-          {moreNavLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setOpen(false)}
-              className="block px-4 py-2.5 text-sm font-medium text-text-dark transition-colors hover:bg-primary/10 hover:text-primary"
-            >
-              {label}
-            </Link>
-          ))}
+          {links.map((item) =>
+            item.action === "logout" ? (
+              <button
+                key="logout"
+                type="button"
+                onClick={handleLogout}
+                className="block w-full px-4 py-2.5 text-left text-sm font-medium text-text-dark transition-colors hover:bg-primary/10 hover:text-primary"
+              >
+                {item.label}
+              </button>
+            ) : (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2.5 text-sm font-medium text-text-dark transition-colors hover:bg-primary/10 hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            )
+          )}
         </div>
       )}
 
@@ -77,11 +102,23 @@ function MoreMenu({ isActive }) {
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const moreActive = moreNavLinks.some(({ href }) => pathname === href);
+  const { data: session } = authClient.useSession();
+
+  const moreLinks = session?.user
+    ? [
+        ...moreNavLinksGuest.filter(
+          (l) => l.href !== "/login" && l.href !== "/register"
+        ),
+        { label: "Logout", action: "logout" },
+      ]
+    : moreNavLinksGuest;
+
+  const moreActive =
+    moreLinks.some((item) => item.href && pathname === item.href) ||
+    (session?.user && pathname === "/profile");
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-primary/10 bg-bg-light shadow-[0_-4px_20px_rgba(124,58,237,0.08)] lg:hidden">
-      {/* Tablet (md): all menu items */}
       <ul className="mx-auto hidden max-w-3xl items-stretch justify-around md:flex">
         {mainNavLinks.map((link) => (
           <li key={link.href} className="flex min-w-0 flex-1">
@@ -90,7 +127,6 @@ export default function BottomNav() {
         ))}
       </ul>
 
-      {/* Mobile (< md): Home, Tutors, My Tutor, Profile + More */}
       <ul className="mx-auto flex max-w-lg items-stretch justify-around px-1 md:hidden">
         {mobileNavLinks.map((link) => (
           <li key={link.href} className="flex min-w-0 flex-1">
@@ -98,7 +134,7 @@ export default function BottomNav() {
           </li>
         ))}
         <li className="flex min-w-0 flex-1">
-          <MoreMenu isActive={moreActive} />
+          <MoreMenu links={moreLinks} isActive={moreActive} />
         </li>
       </ul>
     </nav>
