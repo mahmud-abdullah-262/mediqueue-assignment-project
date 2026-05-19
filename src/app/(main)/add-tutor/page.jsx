@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Select, Button, Card, ListBox } from "@heroui/react";
+import { Select, Button, ListBox, TextField, Label, Input, FieldError } from "@heroui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { BookOpen, Person, Camera, Clock, CircleDollar, House, MapPin, Display } from "@gravity-ui/icons";
-import { Divider } from "@gravity-ui/uikit";
+import { BookOpen, Person, Clock, House } from "@gravity-ui/icons";
+import { addTutor } from "@/actions/actions";
 
 const SUBJECTS = [
   "Mathematics", "Higher Mathematics", "Physics", "Chemistry",
@@ -32,7 +32,7 @@ const TIME_SLOTS = [
 
 const TEACHING_MODES = ["Online", "Offline", "Both"];
 
-const inputBase = "w-full h-10 text-sm border rounded-xl outline-none transition-all placeholder:text-gray-400 border-gray-300 hover:border-violet-500 focus:border-violet-600";
+const inputBase = "w-full h-10 text-sm border rounded-xl outline-none transition-all placeholder:text-gray-400 border-gray-300 hover:border-violet-500 focus:border-violet-600 px-4";
 const inputError = "border-red-400 hover:border-red-400 focus:border-red-400";
 
 const SectionLabel = ({ icon: Icon, label }) => (
@@ -45,27 +45,14 @@ const SectionLabel = ({ icon: Icon, label }) => (
   </div>
 );
 
-const Field = ({ label, error, required, children, className }) => (
+// সাধারণ text/number ইনপুটের জন্য wrapper
+const FieldWrapper = ({ label, error, required, children }) => (
   <div className="flex flex-col gap-1.5">
     <label className="text-sm font-medium text-indigo-950">
       {label} {required && <span className="text-red-500">*</span>}
     </label>
     {children}
     {error && <span className="text-xs text-red-500">{error}</span>}
-  </div>
-);
-
-const TextInput = ({ icon: Icon, error, ...props }) => (
-  <div className="relative">
-    {Icon && (
-      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-violet-300 pointer-events-none">
-        <Icon width={16} height={16} />
-      </span>
-    )}
-    <input
-      className={`${inputBase} ${error ? inputError : ""} ${Icon ? "pl-9 pr-4" : "px-4"}`}
-      {...props}
-    />
   </div>
 );
 
@@ -76,12 +63,12 @@ const AddTutor = () => {
     tutorName: "",
     photo: "",
     subject: "",
-    availableDays: "",
-    availableTimeSlot: "",
-    hourlyFee: "",
-    totalSlot: "",
+    availability: "",
+    availableTime: "",
+    feeName: "",
+    seats: "",
     sessionStartDate: null,
-    institution: "",
+    institutionName: "",
     experience: "",
     location: "",
     teachingMode: "",
@@ -97,61 +84,37 @@ const AddTutor = () => {
   const validate = () => {
     const newErrors = {};
     const required = [
-      "tutorName", "photo", "subject", "availableDays",
-      "availableTimeSlot", "hourlyFee", "totalSlot",
-      "sessionStartDate", "institution", "experience",
+      "tutorName", "photo", "subject", "availability",
+      "availableTime", "feeName", "seats",
+      "sessionStartDate", "institutionName", "experience",
       "location", "teachingMode",
     ];
     required.forEach((f) => {
       if (!form[f] || form[f] === "") newErrors[f] = "This field is required";
     });
-    if (form.hourlyFee && isNaN(Number(form.hourlyFee))) newErrors.hourlyFee = "Must be a number";
-    if (form.totalSlot && isNaN(Number(form.totalSlot))) newErrors.totalSlot = "Must be a number";
+    if (form.feeName && isNaN(Number(form.feeName))) newErrors.feeName = "Must be a number";
+    if (form.seats && isNaN(Number(form.seats))) newErrors.seats = "Must be a number";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Current form state:", form); // debug
     if (!validate()) return;
 
-    const payload = {
+    const formData = {
       ...form,
-      hourlyFee: Number(form.hourlyFee),
-      totalSlot: Number(form.totalSlot),
+      feeName: Number(form.feeName),
+      seats: Number(form.seats),
       sessionStartDate: form.sessionStartDate
         ? form.sessionStartDate.toISOString().split("T")[0]
         : null,
     };
 
-    console.log("📦 Tutor Payload:", payload);
+    console.log("New tutor Data from client:", formData);
+    addTutor(formData);
   };
-
-  const SelectField = ({ label, field, placeholder, options, icon: Icon }) => (
-    <Field label={label} error={errors[field]} required>
-      <Select
-        placeholder={placeholder}
-        selectedKey={form[field] || null}
-        onSelectionChange={(key) => handleChange(field, key || "")}
-        isInvalid={!!errors[field]}
-      >
-        <Select.Trigger>
-          <Select.Value />
-          <Select.Indicator />
-        </Select.Trigger>
-        <Select.Popover>
-          <ListBox>
-            {options.map((opt) => (
-              <ListBox.Item key={opt} id={opt} textValue={opt}>
-                {opt}
-                <ListBox.ItemIndicator />
-              </ListBox.Item>
-            ))}
-          </ListBox>
-        </Select.Popover>
-      </Select>
-    </Field>
-  );
 
   return (
     <div className="min-h-screen py-10 px-4 bg-violet-50">
@@ -164,169 +127,184 @@ const AddTutor = () => {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-indigo-950">Add a Tutor</h1>
-            <p className="text-sm text-gray-500">Fill in the details below to register a new tutor session</p>
+            <p className="text-sm text-gray-500">Fill in the details below to register a new tutor</p>
           </div>
         </div>
 
-        {/* Card */}
-        <Card className="border border-violet-200 bg-white rounded-2xl" shadow="none">
-          <div className="p-8">
-            <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} className="p-10 space-y-8 mx-auto bg-gray-100 rounded-2xl">
 
-              {/* Section 1: Basic Info */}
-              <SectionLabel icon={Person} label="Basic Information" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+          {/* ───── Basic Information ───── */}
+          <div>
+            <SectionLabel icon={Person} label="Basic Information" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
 
-                <Field label="Tutor Name" error={errors.tutorName} required>
-                  <TextInput
-                    placeholder="e.g. Dr. Arif Hossain"
-                    value={form.tutorName}
-                    onChange={(e) => handleChange("tutorName", e.target.value)}
-                    error={errors.tutorName}
-                  />
-                </Field>
-
-                
-
-                <Field label="Photo URL"  error={errors.photo} required>
-                 
-                  <TextInput
-                    
-                    placeholder="https://imgbb.com/..."
-                    value={form.photo}
-                    onChange={(e) => handleChange("photo", e.target.value)}
-                    error={errors.photo}
-                  />
-                </Field>
-
-                <SelectField
-                  label="Subject / Category"
-                  placeholder="Select a subject"
-                  field="subject"
-                  options={SUBJECTS}
+              {/* Tutor Name */}
+              <FieldWrapper label="Tutor Name" error={errors.tutorName} required>
+                <input
+                  value={form.tutorName}
+                  onChange={(e) => handleChange("tutorName", e.target.value)}
+                  placeholder="e.g: Dr. Arif Hossain"
+                  className={`${inputBase} ${errors.tutorName ? inputError : ""}`}
                 />
+              </FieldWrapper>
 
-                <SelectField
-                  label="Teaching Mode"
-                  placeholder="Online / Offline / Both"
-                  field="teachingMode"
-                  options={TEACHING_MODES}
+              {/* Photo URL */}
+              <FieldWrapper label="Photo URL" error={errors.photo} required>
+                <input
+                  value={form.photo}
+                  onChange={(e) => handleChange("photo", e.target.value)}
+                  placeholder="https://imgbb.com/..."
+                  className={`${inputBase} ${errors.photo ? inputError : ""}`}
                 />
-              </div>
+              </FieldWrapper>
 
-              <Divider className="mb-8" />
-
-              {/* Section 2: Schedule */}
-              <SectionLabel icon={Clock} label="Schedule & Availability" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-
-                <SelectField
-                  label="Available Days"
-                  placeholder="Select days"
-                  field="availableDays"
-                  options={DAYS_OPTIONS}
-                />
-
-                <SelectField
-                  label="Available Time Slot"
-                  placeholder="Select time"
-                  field="availableTimeSlot"
-                  options={TIME_SLOTS}
-                />
-
-                <Field label="Session Start Date" error={errors.sessionStartDate} required>
-                  <DatePicker
-                    selected={form.sessionStartDate}
-                    onChange={(date) => handleChange("sessionStartDate", date)}
-                    dateFormat="dd/MM/yyyy"
-                    minDate={new Date()}
-                    placeholderText="DD/MM/YYYY"
-                    className={`${inputBase} px-4 ${errors.sessionStartDate ? inputError : ""}`}
-                    wrapperClassName="w-full"
-                  />
-                </Field>
-
-                <Field label="Total Slots" error={errors.totalSlot} required>
-                  <TextInput
-                    type="number"
-                    min={1}
-                    placeholder="e.g. 10"
-                    value={form.totalSlot}
-                    onChange={(e) => handleChange("totalSlot", e.target.value)}
-                    error={errors.totalSlot}
-                  />
-                </Field>
-              </div>
-
-              <Divider className="mb-8" />
-
-              {/* Section 3: Institution & Fee */}
-              <SectionLabel icon={House} label="Institution & Fee" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
-
-                <Field label="Institution" error={errors.institution} required>
-                  <TextInput
-                    placeholder="e.g. Dhaka University"
-                    value={form.institution}
-                    onChange={(e) => handleChange("institution", e.target.value)}
-                    error={errors.institution}
-                  />
-                </Field>
-
-                <Field label="Experience" error={errors.experience} required>
-                  <TextInput
-                    placeholder="e.g. 5 years"
-                    value={form.experience}
-                    onChange={(e) => handleChange("experience", e.target.value)}
-                    error={errors.experience}
-                  />
-                </Field>
-
-                <Field label="Hourly Fee (BDT)" error={errors.hourlyFee} required>
-                  <TextInput
-                  
-                    type="number"
-                    min={0}
-                    placeholder="e.g. 800"
-                    value={form.hourlyFee}
-                    onChange={(e) => handleChange("hourlyFee", e.target.value)}
-                    error={errors.hourlyFee}
-                  />
-                </Field>
-
-                <Field label="Location (Area/City)" error={errors.location} required>
-                  <TextInput
-                  
-                    placeholder="e.g. Dhanmondi, Dhaka"
-                    value={form.location}
-                    onChange={(e) => handleChange("location", e.target.value)}
-                    error={errors.location}
-                  />
-                </Field>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-violet-100">
-                <Button
-                  type="button"
-                  variant="flat"
-                  onPress={() => router.back()}
-                  className="h-11 px-7 rounded-xl font-semibold text-sm"
+              {/* Subject */}
+              <FieldWrapper label="Subject" error={errors.subject} required>
+                <select
+                  value={form.subject}
+                  onChange={(e) => handleChange("subject", e.target.value)}
+                  className={`${inputBase} ${errors.subject ? inputError : ""} bg-white`}
                 >
-                  Cancel
-                </Button>
+                  <option value="">Select Subject</option>
+                  {SUBJECTS.map((s) => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </FieldWrapper>
 
-                <Button
-                  type="submit"
-                  className="h-11 px-8 rounded-xl font-semibold text-sm text-white bg-violet-700 hover:bg-violet-800"
+              {/* Teaching Mode */}
+              <FieldWrapper label="Teaching Mode" error={errors.teachingMode} required>
+                <select
+                  value={form.teachingMode}
+                  onChange={(e) => handleChange("teachingMode", e.target.value)}
+                  className={`${inputBase} ${errors.teachingMode ? inputError : ""} bg-white`}
                 >
-                  Add Tutor
-                </Button>
-              </div>
+                  <option value="">Online / Offline / Both</option>
+                  {TEACHING_MODES.map((m) => (
+                    <option key={m} value={m}>{m}</option>
+                  ))}
+                </select>
+              </FieldWrapper>
 
-            </form>
+            </div>
           </div>
-        </Card>
+
+          {/* ───── Schedule & Availability ───── */}
+          <SectionLabel icon={Clock} label="Schedule & Availability" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+
+            {/* Availability */}
+            <FieldWrapper label="Availability" error={errors.availability} required>
+              <select
+                value={form.availability}
+                onChange={(e) => handleChange("availability", e.target.value)}
+                className={`${inputBase} ${errors.availability ? inputError : ""} bg-white`}
+              >
+                <option value="">Select Days</option>
+                {DAYS_OPTIONS.map((d) => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
+              </select>
+            </FieldWrapper>
+
+            {/* Available Time */}
+            <FieldWrapper label="Available Time" error={errors.availableTime} required>
+              <select
+                value={form.availableTime}
+                onChange={(e) => handleChange("availableTime", e.target.value)}
+                className={`${inputBase} ${errors.availableTime ? inputError : ""} bg-white`}
+              >
+                {/* <option value="">04:00 PM - 06:00 PM</option> */}
+                {TIME_SLOTS.map((slot) => (
+                  <option key={slot} value={slot}>{slot}</option>
+                ))}
+              </select>
+            </FieldWrapper>
+
+            {/* Session Start Date */}
+            <FieldWrapper label="Session Start Date" error={errors.sessionStartDate} required>
+              <DatePicker
+                selected={form.sessionStartDate}
+                onChange={(date) => handleChange("sessionStartDate", date)}
+                dateFormat="dd/MM/yyyy"
+                minDate={new Date()}
+                placeholderText="DD/MM/YYYY"
+                className={`${inputBase} ${errors.sessionStartDate ? inputError : ""}`}
+                wrapperClassName="w-full"
+              />
+            </FieldWrapper>
+
+            {/* Seats */}
+            <FieldWrapper label="Seat" error={errors.seats} required>
+              <input
+                type="number"
+                min={0}
+                value={form.seats}
+                onChange={(e) => handleChange("seats", e.target.value)}
+                placeholder="30"
+                className={`${inputBase} ${errors.seats ? inputError : ""}`}
+              />
+            </FieldWrapper>
+
+          </div>
+
+          {/* ───── Institution & Fee ───── */}
+          <SectionLabel icon={House} label="Institution & Fee" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+
+            {/* Institution Name */}
+            <FieldWrapper label="Institution Name" error={errors.institutionName} required>
+              <input
+                value={form.institutionName}
+                onChange={(e) => handleChange("institutionName", e.target.value)}
+                placeholder="Dhaka University"
+                className={`${inputBase} ${errors.institutionName ? inputError : ""}`}
+              />
+            </FieldWrapper>
+
+            {/* Experience */}
+            <FieldWrapper label="Experience" error={errors.experience} required>
+              <input
+                value={form.experience}
+                onChange={(e) => handleChange("experience", e.target.value)}
+                placeholder="5 Years"
+                className={`${inputBase} ${errors.experience ? inputError : ""}`}
+              />
+            </FieldWrapper>
+
+            {/* Fee */}
+            <FieldWrapper label="Fee (BDT)" error={errors.feeName} required>
+              <input
+                type="number"
+                min={0}
+                value={form.feeName}
+                onChange={(e) => handleChange("feeName", e.target.value)}
+                placeholder="550"
+                className={`${inputBase} ${errors.feeName ? inputError : ""}`}
+              />
+            </FieldWrapper>
+
+            {/* Location */}
+            <FieldWrapper label="Location" error={errors.location} required>
+              <input
+                value={form.location}
+                onChange={(e) => handleChange("location", e.target.value)}
+                placeholder="Dhaka"
+                className={`${inputBase} ${errors.location ? inputError : ""}`}
+              />
+            </FieldWrapper>
+
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full h-11 rounded-xl bg-violet-700 text-white text-sm font-semibold hover:bg-violet-800 transition-colors"
+          >
+            Add Tutor
+          </button>
+
+        </form>
 
         <p className="text-xs text-center text-gray-400 mt-4">
           Fields marked with <span className="text-red-400">*</span> are required
