@@ -1,6 +1,6 @@
 "use client";
 
-import {PencilToSquare} from "@gravity-ui/icons";
+import {Pencil, PencilToSquare} from "@gravity-ui/icons";
 
 
 
@@ -103,7 +103,13 @@ export function EditModal({id, tutorDetailsData}) {
 
   return (
     <Modal>
-      <Button variant="secondary">Edit Tutor</Button>
+    <Button
+  variant="outline"
+  className="border border-[#7c3aed]/40 text-[#7c3aed] hover:bg-[#7c3aed]/10 hover:border-[#7c3aed] transition-colors"
+>
+  <Pencil size={15} />
+  Edit Tutor
+</Button>
       <Modal.Backdrop>
         <Modal.Container className={' bg-gray-100'} placement="auto">
           <Modal.Dialog className="sm:max-w-4xl ">

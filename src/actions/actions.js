@@ -78,6 +78,22 @@ export const updateTutor = async (id, formData) => {
   return data;
 }
 
+export const postBookig = async (bookingData) => { 
+  const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking`, { 
+   method: 'POST',
+   headers: {
+    'content-type' : 'application/json',
+   },
+   body: JSON.stringify(bookingData)
+  });
+  const data = await res.json()
+  revalidatePath(`/tutors/${bookingData.tutorId}`)
+  redirect(`/tutors/${bookingData.tutorId}`)
+
+
+  }
+ 
+ 
 
 
 

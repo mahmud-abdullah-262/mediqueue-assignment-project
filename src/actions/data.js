@@ -20,3 +20,5 @@ export const TIME_SLOTS = [
 ];
 
 export const TEACHING_MODES = ["Online", "Offline", "Both"];
+
+
