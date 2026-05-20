@@ -34,7 +34,7 @@ export const addTutor = async (formData) => {
   console.log('after post', data);
   if(data.insertedId){
   revalidatePath('/tutors')
-  alert('Tutor added successfully')
+ 
 }
   return data;
 }
@@ -58,3 +58,27 @@ if(data.deletedCount > 0){
 }
 return data;
 }
+
+export const updateTutor = async (id, formData) => {
+  console.log('before update', id, formData)
+  const updated = formData;
+  const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`, {
+   method: 'PATCH',
+   headers: {
+    'content-type' : 'application/json'
+   },
+   body: JSON.stringify(updated)
+  });
+  const data = await res.json()
+  console.log('after update', data);
+  if(data.modifiedCount > 0){
+  revalidatePath(`/tutors/${id}`)
+ 
+} redirect(`/tutors/${id}`)
+  return data;
+}
+
+
+
+
+

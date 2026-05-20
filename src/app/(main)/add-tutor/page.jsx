@@ -7,30 +7,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { BookOpen, Person, Clock, House } from "@gravity-ui/icons";
-import { addTutor } from "@/actions/actions";
+import { addTutor} from "@/actions/actions";
+import { TEACHING_MODES, TIME_SLOTS, DAYS_OPTIONS, SUBJECTS} from "@/actions/data";
 
-const SUBJECTS = [
-  "Mathematics", "Higher Mathematics", "Physics", "Chemistry",
-  "Biology", "English", "Bangla", "ICT",
-  "Accounting", "Economics", "Statistics", "Geography",
-];
-
-const DAYS_OPTIONS = [
-  "Sun - Thu", "Sat - Thu", "Mon - Fri",
-  "Mon - Sat", "Sat - Wed", "Sun - Wed",
-  "Fri - Tue", "Mon - Thu", "Sun - Tue",
-];
-
-const TIME_SLOTS = [
-  "9:00 AM - 12:00 PM", "10:00 AM - 1:00 PM",
-  "11:00 AM - 2:00 PM", "2:00 PM - 5:00 PM",
-  "3:00 PM - 6:00 PM", "4:00 PM - 7:00 PM",
-  "4:30 PM - 7:30 PM", "5:00 PM - 8:00 PM",
-  "5:30 PM - 8:30 PM", "6:00 PM - 9:00 PM",
-  "6:30 PM - 9:30 PM", "7:00 PM - 10:00 PM",
-];
-
-const TEACHING_MODES = ["Online", "Offline", "Both"];
 
 const inputBase = "w-full h-10 text-sm border rounded-xl outline-none transition-all placeholder:text-gray-400 border-gray-300 hover:border-violet-500 focus:border-violet-600 px-4";
 const inputError = "border-red-400 hover:border-red-400 focus:border-red-400";
