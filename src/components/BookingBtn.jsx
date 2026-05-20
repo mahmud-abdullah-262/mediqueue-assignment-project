@@ -32,7 +32,9 @@ export default function BookingBtn({ tutorDetailsData, tutorId }) {
       studentEmail: user?.email,
       phone,
       selectedDate,
-      tutorId
+      tutorId,
+      userId: user?.id,
+      bookingStatus: 'true'
     };
 console.log(selectedDate, minDate, 'failed validation date')
   if (!bookingData.phone.trim()) {
@@ -58,6 +60,7 @@ console.log(selectedDate, minDate, 'failed validation date')
   return (
     <>
       <button
+        disabled={totalSlot === 0}
         onClick={() => setIsOpen(true)}
         style={{ fontFamily: "var(--font-outfit)" }}
         className="flex items-center gap-2 bg-primary hover:bg-[#5b21b6] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors duration-200 shadow-md hover:shadow-lg"

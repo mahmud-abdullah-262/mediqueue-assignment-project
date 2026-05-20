@@ -93,8 +93,26 @@ export const postBookig = async (bookingData) => {
 
   }
  
- 
 
+  export const cancelSession = async (bookingId) => {
+  console.log('cancelSession called, bookingId:', bookingId);
+  console.log('server env:', process.env.MEDIQUEUE_ASSIGNMENT_SERVER);
+  
+  const url = `${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${bookingId}`;
+  console.log('full url:', url);
 
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ bookingStatus: "false" })
+  });
+
+  console.log('response status:', res.status);
+  
+  const text = await res.text();
+  console.log('raw response:', text);
+}
 
 
