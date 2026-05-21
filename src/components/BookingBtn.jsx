@@ -9,6 +9,9 @@ import { postBookig } from "@/actions/actions";
 import { Aladin } from "next/font/google";
 
 export default function BookingBtn({ tutorDetailsData, tutorId }) {
+
+
+
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
@@ -25,7 +28,7 @@ export default function BookingBtn({ tutorDetailsData, tutorId }) {
     return next;
   })();
 
-  const handleBookSession = () => {
+  const handleBookSession = async () => {
     const bookingData = {
       tutorName,
       studentName: user?.name,
@@ -52,9 +55,13 @@ console.log(selectedDate, minDate, 'failed validation date')
       alert('please select a future date')
       return;
     }
-   
-    console.log(bookingData);
-    postBookig(bookingData)
+    
+ const {data: tokenData} = await authClient.token()
+ console.log(tokenData, 'tokenData')  
+    const token = tokenData.token
+    
+    
+    postBookig(bookingData, token)
   };
 
   return (

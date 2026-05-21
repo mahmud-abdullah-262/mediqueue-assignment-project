@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BookOpen, Person, Clock, House } from "@gravity-ui/icons";
 import { addTutor} from "@/actions/actions";
 import { TEACHING_MODES, TIME_SLOTS, DAYS_OPTIONS, SUBJECTS} from "@/actions/data";
+import { authClient } from "@/lib/auth-client";
 
 
 const inputBase = "w-full h-10 text-sm border rounded-xl outline-none transition-all placeholder:text-gray-400 border-gray-300 hover:border-violet-500 focus:border-violet-600 px-4";
@@ -24,7 +25,7 @@ const SectionLabel = ({ icon: Icon, label }) => (
   </div>
 );
 
-// সাধারণ text/number ইনপুটের জন্য wrapper
+
 const FieldWrapper = ({ label, error, required, children }) => (
   <div className="flex flex-col gap-1.5">
     <label className="text-sm font-medium text-indigo-950">
@@ -35,19 +36,27 @@ const FieldWrapper = ({ label, error, required, children }) => (
   </div>
 );
 
-const AddTutor = () => {
+const AddTutor =  () => {
+
+
+
+
+    const { data: session, isPending } = authClient.useSession();
+    const user = session?.user;
+    const addedBy = user?.email;
+    console.log(addedBy, 'added by')
   const router = useRouter();
 
   const [form, setForm] = useState({
     tutorName: "",
     photo: "",
     subject: "",
-    availability: "",
-    availableTime: "",
-    feeName: "",
-    seats: "",
+    availableDays: "",
+    availableTimeSlot: "",
+    hourlyFee: "",
+    totalSlot: "",
     sessionStartDate: null,
-    institutionName: "",
+    institution: "",
     experience: "",
     location: "",
     teachingMode: "",
@@ -63,36 +72,41 @@ const AddTutor = () => {
   const validate = () => {
     const newErrors = {};
     const required = [
-      "tutorName", "photo", "subject", "availability",
-      "availableTime", "feeName", "seats",
-      "sessionStartDate", "institutionName", "experience",
+      "tutorName", "photo", "subject", "availableDays",
+      "availableTimeSlot", "hourlyFee", "totalSlot",
+      "sessionStartDate", "institution", "experience",
       "location", "teachingMode",
     ];
     required.forEach((f) => {
       if (!form[f] || form[f] === "") newErrors[f] = "This field is required";
     });
-    if (form.feeName && isNaN(Number(form.feeName))) newErrors.feeName = "Must be a number";
-    if (form.seats && isNaN(Number(form.seats))) newErrors.seats = "Must be a number";
+    if (form.hourlyFee && isNaN(Number(form.hourlyFee))) newErrors.hourlyFee = "Must be a number";
+    if (form.totalSlot && isNaN(Number(form.totalSlot))) newErrors.totalSlot = "Must be a number";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    
+ const {data: tokenData} = await authClient.token()
+    const token = tokenData.token
+
     e.preventDefault();
     console.log("Current form state:", form); // debug
     if (!validate()) return;
 
     const formData = {
       ...form,
-      feeName: Number(form.feeName),
-      seats: Number(form.seats),
+      hourlyFee: Number(form.hourlyFee),
+      totalSlot: Number(form.totalSlot),
       sessionStartDate: form.sessionStartDate
         ? form.sessionStartDate.toISOString().split("T")[0]
         : null,
+        addedBy
     };
 
     console.log("New tutor Data from client:", formData);
-    addTutor(formData);
+    addTutor(formData, token);
   };
 
   return (
@@ -168,16 +182,16 @@ const AddTutor = () => {
             </div>
           </div>
 
-          {/* ───── Schedule & Availability ───── */}
-          <SectionLabel icon={Clock} label="Schedule & Availability" />
+          {/* ───── Schedule & availableDays ───── */}
+          <SectionLabel icon={Clock} label="Schedule & availableDays" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
 
-            {/* Availability */}
-            <FieldWrapper label="Availability" error={errors.availability} required>
+            {/* availableDays */}
+            <FieldWrapper label="availableDays" error={errors.availableDays} required>
               <select
-                value={form.availability}
-                onChange={(e) => handleChange("availability", e.target.value)}
-                className={`${inputBase} ${errors.availability ? inputError : ""} bg-white`}
+                value={form.availableDays}
+                onChange={(e) => handleChange("availableDays", e.target.value)}
+                className={`${inputBase} ${errors.availableDays ? inputError : ""} bg-white`}
               >
                 <option value="">Select Days</option>
                 {DAYS_OPTIONS.map((d) => (
@@ -187,11 +201,11 @@ const AddTutor = () => {
             </FieldWrapper>
 
             {/* Available Time */}
-            <FieldWrapper label="Available Time" error={errors.availableTime} required>
+            <FieldWrapper label="Available Time" error={errors.availableTimeSlot} required>
               <select
-                value={form.availableTime}
-                onChange={(e) => handleChange("availableTime", e.target.value)}
-                className={`${inputBase} ${errors.availableTime ? inputError : ""} bg-white`}
+                value={form.availableTimeSlot}
+                onChange={(e) => handleChange("availableTimeSlot", e.target.value)}
+                className={`${inputBase} ${errors.availableTimeSlot ? inputError : ""} bg-white`}
               >
                 {/* <option value="">04:00 PM - 06:00 PM</option> */}
                 {TIME_SLOTS.map((slot) => (
@@ -213,15 +227,15 @@ const AddTutor = () => {
               />
             </FieldWrapper>
 
-            {/* Seats */}
-            <FieldWrapper label="Seat" error={errors.seats} required>
+            {/* totalSlot */}
+            <FieldWrapper label="Seat" error={errors.totalSlot} required>
               <input
                 type="number"
                 min={0}
-                value={form.seats}
-                onChange={(e) => handleChange("seats", e.target.value)}
+                value={form.totalSlot}
+                onChange={(e) => handleChange("totalSlot", e.target.value)}
                 placeholder="30"
-                className={`${inputBase} ${errors.seats ? inputError : ""}`}
+                className={`${inputBase} ${errors.totalSlot ? inputError : ""}`}
               />
             </FieldWrapper>
 
@@ -232,12 +246,12 @@ const AddTutor = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
 
             {/* Institution Name */}
-            <FieldWrapper label="Institution Name" error={errors.institutionName} required>
+            <FieldWrapper label="Institution Name" error={errors.institution} required>
               <input
-                value={form.institutionName}
-                onChange={(e) => handleChange("institutionName", e.target.value)}
+                value={form.institution}
+                onChange={(e) => handleChange("institution", e.target.value)}
                 placeholder="Dhaka University"
-                className={`${inputBase} ${errors.institutionName ? inputError : ""}`}
+                className={`${inputBase} ${errors.institution ? inputError : ""}`}
               />
             </FieldWrapper>
 
@@ -252,14 +266,14 @@ const AddTutor = () => {
             </FieldWrapper>
 
             {/* Fee */}
-            <FieldWrapper label="Fee (BDT)" error={errors.feeName} required>
+            <FieldWrapper label="Fee (BDT)" error={errors.hourlyFee} required>
               <input
                 type="number"
                 min={0}
-                value={form.feeName}
-                onChange={(e) => handleChange("feeName", e.target.value)}
+                value={form.hourlyFee}
+                onChange={(e) => handleChange("hourlyFee", e.target.value)}
                 placeholder="550"
-                className={`${inputBase} ${errors.feeName ? inputError : ""}`}
+                className={`${inputBase} ${errors.hourlyFee ? inputError : ""}`}
               />
             </FieldWrapper>
 

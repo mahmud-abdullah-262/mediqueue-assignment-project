@@ -4,7 +4,10 @@ import Link from "next/link";
 
 
 
-export default function TutorCard({ tutor, onDetails }) {
+export default function TutorCard({ tutor, onDetails })
+{
+
+  console.log(tutor, 'tutor')
   const {
     tutorName,
     photo,

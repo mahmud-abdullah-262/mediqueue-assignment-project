@@ -9,7 +9,7 @@ import Link from "next/link";
 export default async function TutorsPage() {
     
   const tutorsData = await getTutors()
-  // console.log(tutorsData, 'tutors Data')
+  console.log(tutorsData, 'tutors Data')
 
 
   return (
@@ -27,7 +27,9 @@ export default async function TutorsPage() {
   
    <div className="w-11/12 mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-    {tutorsData.map(tutor => <TutorCard key={tutor._id} tutor={tutor} ></TutorCard>)}
+    {tutorsData.map(tutor => 
+    
+    <TutorCard key={tutor._id} tutor={tutor} ></TutorCard>)}
   </div>;
   </>
   )

@@ -20,10 +20,21 @@ import Image from "next/image";
 import DeleteBtn from "@/components/DeteteBtn";
 import { EditModal } from "@/components/editModal";
 import BookingBtn from "@/components/BookingBtn";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function TutorDetailsPage({ params }) {
+
+  // console.log(Object.keys(auth.api)); এটা দিলে অথের ভেতর কি কি আছে দেখা যায়
+const {token} = await auth?.api?.getToken({
+  headers: await headers()
+})
+  console.log(token, 'token')
+ 
+
+
   const { id } = await params;
-  const tutorDetailsData = await getTutorsDetails(id);
+  const tutorDetailsData = await getTutorsDetails(id, token);
   const {
     tutorName,
     photo,

@@ -1,6 +1,8 @@
 'use server'
 
+import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 
@@ -12,20 +14,27 @@ export const getTutors = async () => {
   return res;
 }
 
-export const getTutorsDetails = async (id) => {
-  const data = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`);
+export const getTutorsDetails = async (id, token) => {
+  const data = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`, {
+    headers: {
+      authorization :`Bearer ${token}`
+    }
+  });
   const res = await data.json()
 
   return res;
 }
 
-export const addTutor = async (formData) => {
+export const addTutor = async (formData, token) => {
+
+  
   console.log('before post', formData);
   const newTutor = formData;
   const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors`, {
    method: 'POST',
    headers: {
-    'content-type' : 'application/json'
+    'content-type' : 'application/json',
+     authorization :`Bearer ${token}`
    },
    body: JSON.stringify(newTutor)
   });
@@ -78,11 +87,12 @@ export const updateTutor = async (id, formData) => {
   return data;
 }
 
-export const postBookig = async (bookingData) => { 
+export const postBookig = async (bookingData, token) => { 
   const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking`, { 
    method: 'POST',
    headers: {
     'content-type' : 'application/json',
+     authorization :`Bearer ${token}`
    },
    body: JSON.stringify(bookingData)
   });

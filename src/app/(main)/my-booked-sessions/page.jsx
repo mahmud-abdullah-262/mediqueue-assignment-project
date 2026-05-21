@@ -8,16 +8,24 @@ import { DeleteSession } from "@/components/DeleteSession";
 import { getBookings } from "@/actions/actions";
 
 export default async function MyBookedSessionsPage() {
+
+  const {token} = await auth.api.getToken({
+    headers: await headers() // নেক্সত হেডারসথেকে ইম্পোর্ট করতে হবে।
+  })
   const session = await auth.api.getSession({
     headers: await headers(),
+     
   });
 
   const user = session?.user;
   const id = user?.id;
   console.log(session, "session");
 
-  const res = await fetch(
-    `${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${user?.id}`
+  const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${user?.id}`, {
+     headers: {
+      authorization :`Bearer ${token}`
+    }
+  }
   );
   console.log(await res, "res");
   const bookings = await res.json();
