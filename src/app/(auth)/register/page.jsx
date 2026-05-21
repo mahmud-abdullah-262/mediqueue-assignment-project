@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import { Eye, EyeClosed } from "@gravity-ui/icons";
 import { Divider } from "@gravity-ui/uikit";
@@ -28,31 +29,57 @@ export default function RegisterPage() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    setAuthError("");
-    setLoading(true);
+  setAuthError("");
+  setLoading(true);
 
-    const { error } = await authClient.signUp.email({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      image: data.photo || undefined,
-      fetchOptions: {
+  try {
+    const { error } = await authClient.signUp.email(
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        image: data.photo || undefined,
+      },
+      {
         onSuccess: () => {
+          toast.success("You have successfully signed up!", {
+            description: "You can continue learning with MediQueue.",
+            actionProps: {
+              children: "Home",
+              className: "bg-success text-success-foreground",
+            },
+          });
+
           router.push("/");
           router.refresh();
         },
         onError: (ctx) => {
-          setAuthError(ctx.error.message || "Signup failed");
-          setLoading(false);
+          const message = ctx?.error?.message || "Signup failed";
+
+          setAuthError(message);
+          toast.warning("Signup Failed!", {
+            description: message,
+            actionProps: {
+              children: "Retry",
+              className: "bg-warning text-warning-foreground",
+            },
+          });
         },
-      },
-    });
+      }
+    );
 
     if (error) {
-      setAuthError(error.message || "Signup failed");
+      const message = error.message || "Signup failed";
+      setAuthError(message);
+      toast.warning("Signup Failed!", {
+        description: message,
+      });
+      return;
     }
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden">

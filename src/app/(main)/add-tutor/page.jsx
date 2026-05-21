@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Select, Button, ListBox, TextField, Label, Input, FieldError } from "@heroui/react";
+import { Select, Button, ListBox, TextField, Label, Input, FieldError, toast } from "@heroui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -87,27 +87,47 @@ const AddTutor =  () => {
   };
 
   const handleSubmit = async (e) => {
-    
- const {data: tokenData} = await authClient.token()
-    const token = tokenData.token
+  e.preventDefault();
 
-    e.preventDefault();
-    console.log("Current form state:", form); // debug
-    if (!validate()) return;
+  const { data: tokenData } = await authClient.token();
+  const token = tokenData?.token;
 
-    const formData = {
-      ...form,
-      hourlyFee: Number(form.hourlyFee),
-      totalSlot: Number(form.totalSlot),
-      sessionStartDate: form.sessionStartDate
-        ? form.sessionStartDate.toISOString().split("T")[0]
-        : null,
-        addedBy
-    };
+  console.log("Current form state:", form);
 
-    console.log("New tutor Data from client:", formData);
-    addTutor(formData, token);
+  if (!validate()) return;
+
+  const formData = {
+    ...form,
+    hourlyFee: Number(form.hourlyFee),
+    totalSlot: Number(form.totalSlot),
+    sessionStartDate: form.sessionStartDate
+      ? form.sessionStartDate.toISOString().split("T")[0]
+      : null,
+    addedBy,
   };
+
+  console.log("New tutor Data from client:", formData);
+
+  try {
+    await addTutor(formData, token);
+
+    toast.success("You have Successfully added a tutor", {
+      description: "Redirecting to tutors page...",
+      actionProps: {
+        children: "View Tutors",
+        className: "bg-success text-success-foreground",
+      
+      },
+    });
+
+    router.push("/tutors");
+    router.refresh();
+  } catch (error) {
+    toast.warning("Failed to add tutor", {
+      description: error?.message || "Something went wrong",
+    });
+  }
+};
 
   return (
     <div className="min-h-screen py-10 px-4 bg-violet-50">

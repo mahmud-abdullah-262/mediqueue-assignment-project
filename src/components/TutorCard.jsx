@@ -30,7 +30,7 @@ export default function TutorCard({ tutor, onDetails })
   });
 
   return (
-    <div className="w-80 rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className=" rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 flex items-center gap-3">
         <img

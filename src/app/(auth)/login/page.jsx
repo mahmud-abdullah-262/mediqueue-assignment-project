@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   TextField,
+  toast,
 } from "@heroui/react";
 import { Eye, EyeClosed } from "@gravity-ui/icons";
 import { Divider } from "@gravity-ui/uikit";
@@ -36,10 +37,26 @@ export default function LoginPage() {
       password: data.password,
       fetchOptions: {
         onSuccess: () => {
+          toast.success("You have successfully logged in!", {
+    
+              actionProps: {
+          
+                className: "bg-success text-success-foreground",
+                
+              },
+              description: "You can continue Learning with MediQueue.",
+            })
           router.push("/");
           router.refresh();
         },
         onError: (ctx) => {
+          toast.warning("Login Failed!", {
+              actionProps: {
+               
+                className: "bg-warning text-warning-foreground",
+                
+              },
+            })
           setAuthError(ctx.error.message || "Login failed");
           setLoading(false);
         },
