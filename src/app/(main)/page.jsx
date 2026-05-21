@@ -11,9 +11,9 @@ export default function Home() {
     <>
     <Banner></Banner>
     <FeaturedToutors></FeaturedToutors>
-    <Categories></Categories>
+   
     <Comments></Comments>
-    <Counts></Counts>
+    
     <AboutUs></AboutUs>
     </>
   );

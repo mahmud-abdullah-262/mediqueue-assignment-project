@@ -18,7 +18,7 @@ const inputError = "border-red-400 hover:border-red-400 focus:border-red-400";
 const SectionLabel = ({ icon: Icon, label }) => (
   <div className="flex items-center gap-2 mb-4">
     <div className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
-      <Icon className="text-violet-700" width={15} height={15} />
+      <Icon className="text-primary" width={15} height={15} />
     </div>
     <span className="text-sm font-semibold text-indigo-950 tracking-wide uppercase">{label}</span>
     <div className="flex-1 h-px bg-violet-200" />
@@ -115,7 +115,7 @@ const AddTutor =  () => {
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-violet-700 flex items-center justify-center shadow-md shadow-violet-300">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md shadow-violet-300">
             <BookOpen className="text-white" width={20} height={20} />
           </div>
           <div>
@@ -292,7 +292,7 @@ const AddTutor =  () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full h-11 rounded-xl bg-violet-700 text-white text-sm font-semibold hover:bg-violet-800 transition-colors"
+            className="w-full h-11 rounded-xl bg-primary  text-white text-sm font-semibold hover:bg-violet-600 transition-colors"
           >
             Add Tutor
           </button>
