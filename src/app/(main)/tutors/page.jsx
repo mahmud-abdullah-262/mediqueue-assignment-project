@@ -5,7 +5,10 @@ import { Button } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 
-
+export const metadata = {
+  title: "Tutors - MediQueue",
+ 
+};
 
 export default async function TutorsPage() {
     

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Select, Button, ListBox, TextField, Label, Input, FieldError, toast } from "@heroui/react";
 import DatePicker from "react-datepicker";
@@ -11,7 +11,10 @@ import { addTutor} from "@/actions/actions";
 import { TEACHING_MODES, TIME_SLOTS, DAYS_OPTIONS, SUBJECTS} from "@/actions/data";
 import { authClient } from "@/lib/auth-client";
 
-
+export function AboutPage() {
+  useEffect(() => {
+    document.title = "Add a Tutor - MediQueue";
+  }, []);}
 const inputBase = "w-full h-10 text-sm border rounded-xl outline-none transition-all placeholder:text-gray-400 border-gray-300 hover:border-violet-500 focus:border-violet-600 px-4";
 const inputError = "border-red-400 hover:border-red-400 focus:border-red-400";
 

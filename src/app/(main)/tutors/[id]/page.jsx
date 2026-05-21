@@ -23,6 +23,13 @@ import BookingBtn from "@/components/BookingBtn";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+
+
+export const metadata = {
+  title: "Tutor Details - MediQueue"
+  
+};
+
 export default async function TutorDetailsPage({ params }) {
 
   // console.log(Object.keys(auth.api)); এটা দিলে অথের ভেতর কি কি আছে দেখা যায়

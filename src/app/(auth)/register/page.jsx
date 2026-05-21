@@ -15,11 +15,14 @@ import { Divider } from "@gravity-ui/uikit";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { authClient, signIn } from "@/lib/auth-client";
-
+export function AboutPage() {
+  useEffect(() => {
+    document.title = "Signup - MediQueue";
+  }, []);}
 export default function RegisterPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);

@@ -7,6 +7,11 @@ import DeleteBtn from "@/components/DeteteBtn";
 import { DeleteSession } from "@/components/DeleteSession";
 import { getBookings } from "@/actions/actions";
 
+export const metadata = {
+  title: "My Booked Sessions - MediQueue",
+};
+
+
 export default async function MyBookedSessionsPage() {
 
   const {token} = await auth.api.getToken({
