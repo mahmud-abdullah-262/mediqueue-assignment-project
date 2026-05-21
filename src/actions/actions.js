@@ -8,14 +8,14 @@ import { redirect } from "next/navigation";
 
 
 export const getTutors = async () => {
-  const data = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors`);
+  const data = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/tutors`);
   const res = await data.json()
 
   return res;
 }
 
 export const getTutorsDetails = async (id, token) => {
-  const data = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`, {
+  const data = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`, {
     headers: {
       authorization :`Bearer ${token}`
     }
@@ -30,7 +30,7 @@ export const addTutor = async (formData, token) => {
   
   console.log('before post', formData);
   const newTutor = formData;
-  const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors`, {
+  const res = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/tutors`, {
    method: 'POST',
    headers: {
     'content-type' : 'application/json',
@@ -51,7 +51,7 @@ export const addTutor = async (formData, token) => {
 
 export const deleteTutor = async (userId) => {
 
-const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${userId}`, {
+const res = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${userId}`, {
   method: 'delete'
 })
 if (!res.ok) {
@@ -71,7 +71,7 @@ return data;
 export const updateTutor = async (id, formData) => {
   console.log('before update', id, formData)
   const updated = formData;
-  const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`, {
+  const res = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/tutors/${id}`, {
    method: 'PATCH',
    headers: {
     'content-type' : 'application/json'
@@ -88,7 +88,7 @@ export const updateTutor = async (id, formData) => {
 }
 
 export const postBookig = async (bookingData, token) => { 
-  const res = await fetch(`${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking`, { 
+  const res = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/booking`, { 
    method: 'POST',
    headers: {
     'content-type' : 'application/json',
@@ -106,9 +106,9 @@ export const postBookig = async (bookingData, token) => {
 
   export const cancelSession = async (bookingId) => {
   console.log('cancelSession called, bookingId:', bookingId);
-  console.log('server env:', process.env.MEDIQUEUE_ASSIGNMENT_SERVER);
+  console.log('server env:', process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER);
   
-  const url = `${process.env.MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${bookingId}`;
+  const url = `${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${bookingId}`;
   console.log('full url:', url);
 
   const res = await fetch(url, {

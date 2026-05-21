@@ -123,7 +123,7 @@ export default function MyTutorList({ tutors }) {
                     className="w-2 h-2 rounded-full inline-block"
                     style={{ backgroundColor: "var(--color-accent)" }}
                   />
-                  {tutor.availability}
+                  {tutor.availableDays}
                 </span>
               </div>
 
@@ -181,7 +181,7 @@ export default function MyTutorList({ tutors }) {
                     className="text-xs font-semibold text-center leading-tight"
                     style={{ color: "var(--color-text-dark)" }}
                   >
-                    {tutor.availableTime}
+                    {tutor.availableTimeSlot}
                   </p>
                   <p className="text-[10px] text-gray-400">Time</p>
                 </div>

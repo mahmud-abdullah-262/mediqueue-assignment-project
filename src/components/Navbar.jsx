@@ -2,6 +2,8 @@ import Link from "next/link";
 import BottomNav from "./nav/BottomNav";
 import AuthActions from "./nav/AuthActions";
 import { mainNavLinks } from "./nav/navConfig";
+import Image from "next/image";
+import NavLink from "./Navlink";
 
 export default function Navbar() {
   return (
@@ -12,21 +14,18 @@ export default function Navbar() {
             href="/"
             className="shrink-0 text-xl font-bold text-primary transition-colors hover:text-secondary"
           >
-            Logo
+            <Image src={'/assets/medilogo.png'} width={200} height={80} alt="logo"
+            className="h-14 w-full object-cover object-center"
+            ></Image>
           </Link>
 
-          <ul className="hidden flex-1 flex-wrap items-center justify-center gap-1 lg:flex lg:gap-2">
-            {mainNavLinks.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-text-dark transition-colors hover:bg-primary/10 hover:text-primary"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <ul className="hidden flex-1 flex-wrap items-center justify-center gap-1 lg:flex lg:gap-2">
+  {mainNavLinks.map(({ href, label }) => (
+    <li key={href}>
+      <NavLink href={href} label={label} />
+    </li>
+  ))}
+</ul>
 
           <AuthActions className="hidden lg:flex" />
           <AuthActions className="hidden md:flex lg:hidden" compact />
