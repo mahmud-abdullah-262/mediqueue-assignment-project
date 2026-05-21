@@ -1,36 +1,138 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MediQueue — Tutor Booking System
 
-## Getting Started
+**MediQueue** is a full-stack tutor booking web application where students can browse verified tutors, book online or offline learning sessions, and manage their scheduled classes — all from one place.
 
-First, run the development server:
+🌐 **Live Site:** [https://mediqueue-assignment-project.vercel.app/](https://mediqueue.vercel.app)
+
+---
+
+## ✨ Key Features
+
+- 🔐 **Secure Authentication** — Email/password registration with strict password validation (uppercase, lowercase, minimum 6 characters) and one-click Google Sign-in, both secured with JWT tokens stored on the client side.
+
+- 📅 **Smart Session Booking** — Students can book tutor sessions directly from the Tutor Details page. The system automatically validates slot availability and session start dates before confirming a booking, and decreases the slot count in real time after each successful booking.
+
+<!-- - 🔍 **Search & Filter Tutors** — Find the right tutor instantly using case-insensitive name search powered by MongoDB `$regex`, or filter by session date range using `$gte` and `$lte` operators. -->
+
+- 🧑‍🏫 **Tutor Management Dashboard** — Logged-in users can add new tutors, update existing tutor information through a pre-filled modal form, and delete tutors with a confirmation prompt — all without page reloads.
+
+- 📋 **My Booked Sessions** — Each user has a personal sessions dashboard showing all their bookings with live status. Sessions can be cancelled at any time through a confirmation modal, which sends a PATCH request to update the booking status in the database.
+
+<!-- - 🌙 **Dark / Light Theme** — A smooth theme toggle in the navbar applies across the entire application, with preference persisted in localStorage. -->
+
+- ⚡ **Fully Responsive** — Optimized layout for mobile, tablet, and desktop screens across all pages.
+
+---
+
+## 🛠️ Tech Stack
+
+### Client
+- [Next.js](https://nextjs.org/) (App Router)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [HeroUI](https://www.heroui.com/)
+- [Gravity UI Icons](https://gravity-ui.com/)
+- [BetterAuth Authentication](https://better-auth.com/) (Email/Password + Google)
+- [React DatePicker](https://reactdatepicker.com/)
+
+### Server
+- [Node.js](https://nodejs.org/) + [Express.js](https://expressjs.com/)
+- [MongoDB Atlas](https://www.mongodb.com/) 
+- [JSON Web Token (JWT)](https://jwt.io/)
+- [CORS](https://www.npmjs.com/package/cors) + [dotenv](https://www.npmjs.com/package/dotenv)
+
+---
+
+## 📦 Installation & Setup
+
+### Prerequisites
+- Node.js v18+
+- MongoDB Atlas account
+- Firebase project (Authentication enabled)
+
+### Client
+
+```bash
+git clone https://github.com/your-username/mediqueue-client
+cd mediqueue-client
+npm install
+```
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_SERVER_URL=http://localhost:5000
+```
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Server
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+git clone https://github.com/your-username/mediqueue-server
+cd mediqueue-server
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file:
 
-## Learn More
+```env
+DB_USER=your_mongodb_username
+DB_PASS=your_mongodb_password
+JWT_SECRET=your_jwt_secret
+PORT=5000
+```
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔐 Environment Variables
 
-## Deploy on Vercel
+> ⚠️ Never commit `.env` or `.env.local` files to GitHub. Both are included in `.gitignore`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 Pages Overview
+
+| Route | Access | Description |
+|---|---|---|
+| `/` | Public | Home with banner, tutors, and extra sections |
+| `/tutors` | Public | Browse all tutors with search & filter |
+| `/tutor/:id` | Private | Tutor details & booking |
+| `/add-tutor` | Private | Add a new tutor |
+| `/my-tutors` | Private | Manage your added tutors |
+| `/my-booked-sessions` | Private | View & cancel your bookings |
+| `/login` | Public | Login with email or Google |
+| `/register` | Public | Register a new account |
+| `/profile` | Private | View your profile |
+| `*` | Public | 404 Not Found page |
+
+---
+
+## 🚀 Deployment
+
+- **Client** → [Vercel](https://vercel.com/)
+- **Server** → [Vercel](https://vercel.com/)
+
+
+
+## 📁 Repository Links
+
+- 🖥️ **Client:** [github.com/mediqueue-client](https://github.com/mahmud-abdullah-262/mediqueue-assignment-project)
+- 🛠️ **Server:** [github.com/mediqueue-server](https://github.com/mahmud-abdullah-262/mediqueue-assignment-server)
+
+---
+
+## 👨‍💻 Author : Abdullah Al Mahmud
+
+Built with ❤️ as part of **CAT_02** assignment in Complete Web Development BootCamp by Programing Here.

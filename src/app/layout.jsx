@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import { Toast } from "@heroui/react";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${outfit.variable} h-full antialiased`}>
       <Toast.Provider />
       <body className="min-h-full flex flex-col font-outfit bg-bg-light text-text-dark">
-       
+        <SmoothScrollProvider/>-
         <main className="flex-1 pb-20 lg:pb-0">{children}</main>
         <Footer></Footer>
       </body>
