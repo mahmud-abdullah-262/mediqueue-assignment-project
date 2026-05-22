@@ -1,16 +1,39 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 @plugin "daisyui";
 
-@theme inline {
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light mode */
+:root {
   --color-primary: #7c3aed;
   --color-secondary: #5b21b6;
   --color-accent: #22c55e;
+
   --color-bg-light: #faf5ff;
   --color-text-dark: #1e1b4b;
-  --font-outfit: var(--font-outfit);
+  --color-bg-card: #ffffff;
+  --color-border: #ddd6fe;
+  --color-text-muted: #6b7280;
 }
 
-body {
-  font-family: var(--font-outfit), sans-serif;
+/* Dark mode */
+.dark {
+  --color-bg-light: #0f172a;
+  --color-text-dark: #f8fafc;
+  --color-bg-card: #1e293b;
+  --color-border: #334155;
+  --color-text-muted: #94a3b8;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+
+  --color-bg-light: var(--color-bg-light);
+  --color-text-dark: var(--color-text-dark);
+  --color-bg-card: var(--color-bg-card);
+  --color-border: var(--color-border);
+  --color-text-muted: var(--color-text-muted);
 }

@@ -41,7 +41,7 @@ const bottomLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-white font-sans">
+    <footer className="bg-bg-light font-sans">
 
      
       <div className="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -59,7 +59,7 @@ export default function Footer() {
             />
           </Link>
 
-          <p className="text-sm leading-relaxed" style={{ color: "#1e1b4b", opacity: 0.7 }}>
+          <p className="text-sm leading-relaxed text-text-dark">
             From academic excellence to real-world skills, everything you need is here.
           </p>
 
@@ -88,8 +88,8 @@ export default function Footer() {
         {/* Learning Services Links */}
         <div>
           <h4
-            className="text-sm font-bold uppercase tracking-widest mb-5"
-            style={{ color: "#1e1b4b" }}
+            className="text-sm font-bold uppercase tracking-widest mb-5 text-text-dark"
+          
           >
             Learning Services
           </h4>
@@ -98,8 +98,8 @@ export default function Footer() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-sm transition-colors duration-150 hover:text-purple-700"
-                  style={{ color: "#1e1b4b", opacity: 0.75 }}
+                  className="text-sm transition-colors duration-150 hover:text-primary text-text-dark"
+                
                 >
                   {link.label}
                 </Link>
@@ -111,8 +111,8 @@ export default function Footer() {
         {/* Company Links */}
         <div>
           <h4
-            className="text-sm font-bold uppercase tracking-widest mb-5"
-            style={{ color: "#1e1b4b" }}
+            className="text-sm font-bold uppercase tracking-widest mb-5 text-text-dark"
+           
           >
             Our Company
           </h4>
@@ -121,8 +121,8 @@ export default function Footer() {
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className="text-sm transition-colors duration-150 hover:text-purple-700"
-                  style={{ color: "#1e1b4b", opacity: 0.75 }}
+                  className="text-sm transition-colors duration-150 hover:text-primary text-text-dark"
+                  
                 >
                   {link.label}
                 </Link>
@@ -134,21 +134,21 @@ export default function Footer() {
         {/* Contact + Social */}
         <div>
           <h4
-            className="text-sm font-bold uppercase tracking-widest mb-5"
-            style={{ color: "#1e1b4b" }}
+            className="text-sm font-bold uppercase tracking-widest mb-5 text-text-dark"
+        
           >
             Get Contact
           </h4>
           <ul className="flex flex-col gap-3 mb-6">
-            <li className="text-sm" style={{ color: "#1e1b4b", opacity: 0.75 }}>
+            <li className="text-sm text-text-dark/70" >
               <span className="font-semibold" style={{ opacity: 1 }}>Phone:</span>{" "}
               +880 1700-000000
             </li>
-            <li className="text-sm" style={{ color: "#1e1b4b", opacity: 0.75 }}>
+            <li className="text-sm  text-text-dark/70">
               <span className="font-semibold" style={{ opacity: 1 }}>E-mail:</span>{" "}
               support@mediqueue.app
             </li>
-            <li className="text-sm" style={{ color: "#1e1b4b", opacity: 0.75 }}>
+            <li className="text-sm  text-text-dark/70">
               <span className="font-semibold" style={{ opacity: 1 }}>Location:</span>{" "}
               Dhaka, Bangladesh
             </li>
@@ -201,7 +201,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row
                         items-start md:items-center justify-between gap-8">
           <div className="text-center mx-auto">
-            <h2 className="text-4xl md:text-6xl font-black leading-tight text-white/10 mb-3">
+            <h2 className="text-4xl md:text-6xl font-black leading-tight text-text-dark/10 mb-3">
             Beyond Books, Beyond Classrooms
             </h2>
             
@@ -239,7 +239,7 @@ export default function Footer() {
                 href={`https://${name.toLowerCase()}.com`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs transition-colors hover:text-white"
+                className="text-xs transition-colors hover:text-text-dark"
                 style={{ color: "#a78bfa" }}
               >
                 {name}

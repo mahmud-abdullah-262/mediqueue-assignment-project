@@ -4,11 +4,12 @@ import AuthActions from "./nav/AuthActions";
 import { mainNavLinks } from "./nav/navConfig";
 import Image from "next/image";
 import NavLink from "./Navlink";
+import { ToggolBtn } from "./ToggolBtn";
 
 export default function Navbar() {
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-primary/10 bg-bg-light shadow-sm">
+      <header className="sticky top-0 z-40 border-b border-primary/10 bg-bg-light dark:bg-bg-light shadow-sm">
         <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link
             href="/"
@@ -29,6 +30,7 @@ export default function Navbar() {
 
           <AuthActions className="hidden lg:flex" />
           <AuthActions className="hidden md:flex lg:hidden" compact />
+          <ToggolBtn/>
         </nav>
       </header>
 

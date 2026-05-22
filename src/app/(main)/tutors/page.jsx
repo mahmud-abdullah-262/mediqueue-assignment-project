@@ -1,5 +1,4 @@
 import { getTutors } from "@/actions/actions";
-import Tutor from "@/components/Tutor";
 import TutorCard from "@/components/TutorCard";
 import { Button } from "@heroui/react";
 import Image from "next/image";

@@ -99,7 +99,7 @@ const HeroSection = () => {
           <div className="flex-1 flex flex-col items-start justify-center gap-6 lg:pr-8">
 
             {/* label pill */}
-            <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm border border-[#DDD6FE] rounded-full px-4 py-1.5 shadow-sm">
+            <div className="flex items-center gap-2 bg-bg-light/70 dark:bg-bg-light backdrop-blur-sm border border-[#DDD6FE] rounded-full px-4 py-1.5 shadow-sm">
               <span
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ background: "var(--color-accent)" }}
@@ -244,7 +244,7 @@ const HeroSection = () => {
                 </svg>
               </div>
               <div>
-                <p className="text-xs font-bold text-[var(--color-text-dark)] leading-none">Slots Available</p>
+                <p className="text-xs font-bold text-(--color-text-dark) leading-none">Slots Available</p>
                 <p className="text-xs text-gray-400 mt-0.5">Book anytime</p>
               </div>
             </div>

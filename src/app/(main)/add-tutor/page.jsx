@@ -20,18 +20,18 @@ const inputError = "border-red-400 hover:border-red-400 focus:border-red-400";
 
 const SectionLabel = ({ icon: Icon, label }) => (
   <div className="flex items-center gap-2 mb-4">
-    <div className="w-7 h-7 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
+    <div className="w-7 h-7 rounded-lg bg-bg-light flex items-center justify-center flex-shrink-0">
       <Icon className="text-primary" width={15} height={15} />
     </div>
-    <span className="text-sm font-semibold text-indigo-950 tracking-wide uppercase">{label}</span>
-    <div className="flex-1 h-px bg-violet-200" />
+    <span className="text-sm font-semibold text-text-dark tracking-wide uppercase">{label}</span>
+    <div className="flex-1 h-px bg-bg-card" />
   </div>
 );
 
 
 const FieldWrapper = ({ label, error, required, children }) => (
   <div className="flex flex-col gap-1.5">
-    <label className="text-sm font-medium text-indigo-950">
+    <label className="text-sm font-medium text-text-dark">
       {label} {required && <span className="text-red-500">*</span>}
     </label>
     {children}
@@ -133,21 +133,21 @@ const AddTutor =  () => {
 };
 
   return (
-    <div className="min-h-screen py-10 px-4 bg-violet-50">
+    <div className="min-h-screen py-10 px-4 bg-bg-light">
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md shadow-violet-300">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-md shadow-bg-card">
             <BookOpen className="text-white" width={20} height={20} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-indigo-950">Add a Tutor</h1>
+            <h1 className="text-2xl font-bold text-text-dark">Add a Tutor</h1>
             <p className="text-sm text-gray-500">Fill in the details below to register a new tutor</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-10 space-y-8 mx-auto bg-gray-100 rounded-2xl">
+        <form onSubmit={handleSubmit} className="p-10 space-y-8 mx-auto bg-bg-card rounded-2xl">
 
           {/* ───── Basic Information ───── */}
           <div>
@@ -179,7 +179,7 @@ const AddTutor =  () => {
                 <select
                   value={form.subject}
                   onChange={(e) => handleChange("subject", e.target.value)}
-                  className={`${inputBase} ${errors.subject ? inputError : ""} bg-white`}
+                  className={`${inputBase} ${errors.subject ? inputError : ""} bg-bg-card`}
                 >
                   <option value="">Select Subject</option>
                   {SUBJECTS.map((s) => (
@@ -193,7 +193,7 @@ const AddTutor =  () => {
                 <select
                   value={form.teachingMode}
                   onChange={(e) => handleChange("teachingMode", e.target.value)}
-                  className={`${inputBase} ${errors.teachingMode ? inputError : ""} bg-white`}
+                  className={`${inputBase} ${errors.teachingMode ? inputError : ""} bg-bg-card`}
                 >
                   <option value="">Online / Offline / Both</option>
                   {TEACHING_MODES.map((m) => (
@@ -214,7 +214,7 @@ const AddTutor =  () => {
               <select
                 value={form.availableDays}
                 onChange={(e) => handleChange("availableDays", e.target.value)}
-                className={`${inputBase} ${errors.availableDays ? inputError : ""} bg-white`}
+                className={`${inputBase} ${errors.availableDays ? inputError : ""} bg-bg-light`}
               >
                 <option value="">Select Days</option>
                 {DAYS_OPTIONS.map((d) => (
@@ -228,7 +228,7 @@ const AddTutor =  () => {
               <select
                 value={form.availableTimeSlot}
                 onChange={(e) => handleChange("availableTimeSlot", e.target.value)}
-                className={`${inputBase} ${errors.availableTimeSlot ? inputError : ""} bg-white`}
+                className={`${inputBase} ${errors.availableTimeSlot ? inputError : ""} bg-bg-light`}
               >
                 {/* <option value="">04:00 PM - 06:00 PM</option> */}
                 {TIME_SLOTS.map((slot) => (
