@@ -197,7 +197,7 @@ export default function Footer() {
 
         <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="text-center mx-auto">
-            <h2 className="text-4xl md:text-6xl font-black leading-tight text-text-dark/10 mb-3">
+            <h2 className="text-4xl md:text-6xl font-black leading-tight text-bg-card/60 mb-3">
             Beyond Books, Beyond Classrooms
             </h2>
             

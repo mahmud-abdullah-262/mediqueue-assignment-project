@@ -21,10 +21,12 @@ export default function Navbar() {
     </li>
   ))}
 </ul>
-
-          <AuthActions className="hidden lg:flex" />
+          <div className="flex gap-4">
+            <AuthActions className="hidden lg:flex" />
           <AuthActions className="hidden md:flex lg:hidden" compact />
           <ToggolBtn/>
+          </div>
+          
         </nav>
       </header>
 
