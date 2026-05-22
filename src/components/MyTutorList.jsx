@@ -26,8 +26,8 @@ export default function MyTutorList({ tutors }) {
   if (isPending) {
     return (
       <div
-        className="min-h-screen flex items-center justify-center"
-        style={{ backgroundColor: "var(--color-bg-light)" }}
+        className="min-h-screen flex items-center justify-center bg-bg-dark"
+    
       >
         <div className="flex flex-col items-center gap-3">
           <div
@@ -47,11 +47,10 @@ export default function MyTutorList({ tutors }) {
 
   return (
     <div
-      className="min-h-screen py-10 px-4"
-      style={{ backgroundColor: "var(--color-bg-light)" }}
+      className="min-h-screen py-10 px-4 bg-bg-light"
     >
       {/* Page Header */}
-      <div className="max-w-2xl mx-auto mb-8">
+      <div className="max-w-2xl mx-auto mb-8 ">
         <div className="flex items-center gap-3 mb-1">
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -88,13 +87,12 @@ export default function MyTutorList({ tutors }) {
               }}
             />
 
-            <div className="px-5 py-4">
+            <div className="px-5 py-4 bg-bg-card">
               {/* Header Row: Tutor info + Photo */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   {/* Avatar / Photo */}
-                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2"
-                    style={{ borderColor: "var(--color-primary)" }}>
+                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2">
                     <Image
                       src={tutor.photo}
                       width={48}
@@ -105,8 +103,8 @@ export default function MyTutorList({ tutors }) {
                   </div>
                   <div>
                     <p
-                      className="font-semibold text-base leading-tight"
-                      style={{ color: "var(--color-text-dark)" }}
+                      className="font-semibold text-base leading-tight text-text-dark"
+                      
                     >
                       {tutor.tutorName}
                     </p>
@@ -130,28 +128,28 @@ export default function MyTutorList({ tutors }) {
               {/* Dashed Divider */}
               <div className="relative flex items-center my-3">
                 <div
-                  className="flex-1 border-t-2 border-dashed"
-                  style={{ borderColor: "#ede9fe" }}
+                  className="flex-1 border-t-2 border-dashed border-bg-primary"
+                  
                 />
                 <div
                   className="mx-3 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: "var(--color-bg-light)" }}
+                  sty
                 >
                   <div
                     className="w-2.5 h-2.5 rounded-full"
-                    style={{ backgroundColor: "var(--color-primary)" }}
+                   
                   />
                 </div>
                 <div
                   className="flex-1 border-t-2 border-dashed"
-                  style={{ borderColor: "#ede9fe" }}
+                 
                 />
               </div>
 
               {/* Info Grid */}
               <div className="grid grid-cols-3 gap-3 mt-3">
                 {/* Subject */}
-                <div className="flex flex-col items-center gap-1 bg-purple-50 rounded-xl py-3 px-2">
+                <div className="flex flex-col items-center gap-1 bg-bg-light rounded-xl py-3 px-2">
                   <BookOpen size={16} style={{ color: "var(--color-primary)" }} />
                   <p
                     className="text-xs font-semibold text-center leading-tight"
@@ -163,7 +161,7 @@ export default function MyTutorList({ tutors }) {
                 </div>
 
                 {/* Teaching Mode */}
-                <div className="flex flex-col items-center gap-1 bg-purple-50 rounded-xl py-3 px-2">
+                <div className="flex flex-col items-center gap-1 bg-bg-light rounded-xl py-3 px-2">
                   <Display size={16} style={{ color: "var(--color-primary)" }} />
                   <p
                     className="text-xs font-semibold text-center leading-tight"
@@ -175,7 +173,7 @@ export default function MyTutorList({ tutors }) {
                 </div>
 
                 {/* Available Time */}
-                <div className="flex flex-col items-center gap-1 bg-purple-50 rounded-xl py-3 px-2">
+                <div className="flex flex-col items-center gap-1 bg-bg-light rounded-xl py-3 px-2">
                   <Clock size={16} style={{ color: "var(--color-primary)" }} />
                   <p
                     className="text-xs font-semibold text-center leading-tight"

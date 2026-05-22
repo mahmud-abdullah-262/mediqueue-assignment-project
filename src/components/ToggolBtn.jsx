@@ -1,7 +1,9 @@
 "use client";
 
 import {
+
   Moon,
+ 
   Sun
 } from "@gravity-ui/icons";
 import {Switch} from "@heroui/react";
@@ -34,8 +36,32 @@ if (!mounted) return null;
   };
 
   return (
-     <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-      {theme === "dark" ? "☀️" : "🌙"}
-    </button>
+    <>
+
+    <Switch onClick={() => setTheme(theme === "dark" ? "light" : "dark")} >
+      {({isSelected}) => (
+        <>
+          <Switch.Control
+            className={`h-7.75 w-12.75 bg-primary  ${isSelected ? "bg-bg-card shadow-[0_0_12px_rgba(6,182,212,0.5)]" : ""}`}
+          >
+            <Switch.Thumb
+              className={`size-6.75 bg-white shadow-sm ${isSelected ? "ms-5.5 shadow-lg" : ""}`}
+            >
+              <Switch.Icon>
+                {isSelected ? (
+                  <Sun className="size-4 text-primary" />
+                ) : (
+                  <Moon className="size-4 text-primary" />
+                )}
+              </Switch.Icon>
+            </Switch.Thumb>
+          </Switch.Control>
+        </>
+      )}
+    </Switch>
+    </>
+    
+
+    
   );
 }

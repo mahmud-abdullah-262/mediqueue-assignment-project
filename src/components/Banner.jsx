@@ -99,7 +99,7 @@ const HeroSection = () => {
           <div className="flex-1 flex flex-col items-start justify-center gap-6 lg:pr-8">
 
             {/* label pill */}
-            <div className="flex items-center gap-2 bg-bg-light/70 dark:bg-bg-light backdrop-blur-sm border border-[#DDD6FE] rounded-full px-4 py-1.5 shadow-sm">
+            <div className="flex items-center gap-2 bg-bg-light/70 dark:bg-bg-light backdrop-blur-sm border border-[#DDD6FE01] rounded-full px-4 py-1.5 shadow-sm">
               <span
                 className="w-2 h-2 rounded-full flex-shrink-0"
                 style={{ background: "var(--color-accent)" }}
@@ -214,7 +214,7 @@ const HeroSection = () => {
 
             {/* floating card — top right */}
             <div
-              className="absolute top-50 right-0 lg:right-17 z-5 bg-white/80 backdrop-blur-md border border-[#DDD6FE] rounded-2xl px-4 py-3 shadow-lg hidden sm:flex items-center gap-3"
+              className="absolute top-50 right-0 lg:right-17 z-5 bg-bg-light/80 backdrop-blur-md border border-[#DDD6FE01] rounded-2xl px-4 py-3 shadow-lg hidden sm:flex items-center gap-3"
             >
               <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -233,7 +233,7 @@ const HeroSection = () => {
 
             {/* floating card — bottom left */}
             <div
-              className="absolute bottom-16 -left-100 lg: left-152 z-5 bg-white/80 backdrop-blur-md border border-[#DDD6FE] rounded-2xl px-4 py-3 shadow-lg hidden sm:flex items-center gap-3"
+              className="absolute bottom-16 -left-100 lg: left-152 z-5 bg-bg-light/80 backdrop-blur-md border border-[#DDD6FE01] rounded-2xl px-4 py-3 shadow-lg hidden sm:flex items-center gap-3"
             >
               <div
                 className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"

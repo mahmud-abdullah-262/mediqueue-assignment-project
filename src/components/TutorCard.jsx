@@ -30,7 +30,7 @@ export default function TutorCard({ tutor, onDetails })
   });
 
   return (
-    <div className=" rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div className=" rounded-2xl bg-bg-card shadow-lg border border-bg-card overflow-hidden hover:shadow-xl transition-shadow duration-300">
       {/* Header */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-4 flex items-center gap-3">
         <img
@@ -39,9 +39,9 @@ export default function TutorCard({ tutor, onDetails })
           className="w-14 h-14 rounded-full border-2 border-white object-cover shrink-0"
         />
         <div className="min-w-0">
-          <h2 className="text-white font-bold text-base leading-tight truncate">{tutorName}</h2>
+          <h2 className="text-text-light text-xl font-bold leading-tight truncate">{tutorName}</h2>
           <p className="text-blue-100 text-xs mt-0.5 truncate">{institution}</p>
-          <span className="inline-flex items-center gap-1 mt-1 bg-white/20 text-white text-xs px-2 py-0.5 rounded-full">
+          <span className=" inline-flex items-center gap-1 mt-1 bg-primary text-white text-xs px-2 py-1 rounded-full">
             <Star size={10} className="fill-yellow-300 text-yellow-300" />
             {experience} exp.
           </span>
@@ -51,31 +51,31 @@ export default function TutorCard({ tutor, onDetails })
       {/* Subject badge */}
       <div className="px-5 pt-4">
         <div className="flex items-center gap-2">
-          <BookOpen size={15} className="text-indigo-500 shrink-0" />
-          <span className="text-sm font-semibold text-gray-800 truncate">{subject}</span>
+          <BookOpen size={15} className="text-primary shrink-0" />
+          <span className="text-sm font-semibold text-text-light truncate">{subject}</span>
         </div>
       </div>
 
       {/* Info rows */}
       <div className="px-5 py-3 space-y-2.5">
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Calendar size={14} className="text-indigo-400 shrink-0" />
+        <div className="flex items-center gap-2 text-sm text-text-dark">
+          <Calendar size={14} className="text-primary shrink-0" />
           <span>{availableDays}</span>
-          <span className="text-gray-300">•</span>
-          <Clock size={14} className="text-indigo-400 shrink-0" />
+          <span className="text-text-dark">•</span>
+          <Clock size={14} className="text-primary shrink-0" />
           <span className="truncate">{availableTimeSlot}</span>
         </div>
 
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <MapPin size={14} className="text-indigo-400 shrink-0" />
+        <div className="flex items-center gap-2 text-sm text-text-dark">
+          <MapPin size={14} className="text-primary shrink-0" />
           <span className="truncate">{location}</span>
         </div>
 
-        <div className="flex items-center gap-2 text-sm text-gray-600">
-          <Display size={14} className="text-indigo-400 shrink-0" />
-          <span>Mode: <span className="font-medium text-gray-700">{teachingMode}</span></span>
-          <span className="text-gray-300">•</span>
-          <GraduationCap size={14} className="text-indigo-400 shrink-0" />
+        <div className="flex items-center gap-2 text-sm text-text-dark">
+          <Display size={14} className="text-primary shrink-0" />
+          <span>Mode: <span className="font-medium text-text-dark">{teachingMode}</span></span>
+          <span className="text-text-dark">•</span>
+          <GraduationCap size={14} className="text-primary shrink-0" />
           <span>{totalSlot} slots left</span>
         </div>
       </div>
@@ -86,10 +86,10 @@ export default function TutorCard({ tutor, onDetails })
       {/* Footer */}
       <div className="px-5 py-4 flex items-center justify-between">
         <div>
-          <p className="text-xs text-gray-400">Starts {formattedDate}</p>
-          <p className="text-lg font-bold text-gray-900">
+          <p className="text-xs text-text-dark">Starts {formattedDate}</p>
+          <p className="text-lg font-bold text-text-dark">
             {hourlyFee}
-            <span className="text-xs font-normal text-gray-400">/hr</span>
+            <span className="text-xs font-normal text-text-light">/hr</span>
           </p>
         </div>
           <Link href={`/tutors/${tutor._id}`}>

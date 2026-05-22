@@ -71,7 +71,7 @@ export default async function MyBookedSessionsPage() {
             key={booking._id}
             className="bg-white rounded-2xl overflow-hidden shadow-sm border border-purple-100 hover:shadow-md transition-shadow duration-200"
           >
-            {/* Top accent bar */}
+      
             <div
               className="h-1 w-full"
               style={{
@@ -79,8 +79,8 @@ export default async function MyBookedSessionsPage() {
               }}
             />
 
-            <div className="px-5 py-4">
-              {/* Header Row: Tutor info + Status badge */}
+            <div className="px-5 py-4 bg-bg-card">
+              
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                   {/* Avatar circle */}
@@ -103,7 +103,7 @@ export default async function MyBookedSessionsPage() {
                   </div>
                 </div>
 
-                {/* Status Badge */}
+                
                 <span
                   className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full"
                   style={
@@ -127,7 +127,7 @@ export default async function MyBookedSessionsPage() {
                 </span>
               </div>
 
-              {/* Divider with dashed line like flight UI */}
+             
               <div className="relative flex items-center my-3">
                 <div
                   className="flex-1 border-t-2 border-dashed"
@@ -151,7 +151,7 @@ export default async function MyBookedSessionsPage() {
               {/* Info Grid */}
               <div className="grid grid-cols-3 gap-3 mt-3">
                 {/* Date */}
-                <div className="flex flex-col items-center gap-1 bg-purple-50 rounded-xl py-3 px-2">
+                <div className="flex flex-col items-center gap-1 bg-bg-light rounded-xl py-3 px-2">
                   <Calendar
                     size={16}
                     style={{ color: "var(--color-primary)" }}
@@ -170,7 +170,7 @@ export default async function MyBookedSessionsPage() {
                 </div>
 
                 {/* Student Name */}
-                <div className="flex flex-col items-center gap-1 bg-purple-50 rounded-xl py-3 px-2">
+                <div className="flex flex-col items-center gap-1 bg-bg-light rounded-xl py-3 px-2">
                   <PersonFill size={16} style={{ color: "var(--color-primary)" }} />
                   <p
                     className="text-xs font-semibold text-center leading-tight truncate w-full text-center"
@@ -182,7 +182,7 @@ export default async function MyBookedSessionsPage() {
                 </div>
 
                 {/* Student Email */}
-                <div className="flex flex-col items-center gap-1 bg-purple-50 rounded-xl py-3 px-2">
+                <div className="flex flex-col items-center gap-1 bg-bg-light rounded-xl py-3 px-2">
                   <GraduationCap
                     size={16}
                     style={{ color: "var(--color-primary)" }}
