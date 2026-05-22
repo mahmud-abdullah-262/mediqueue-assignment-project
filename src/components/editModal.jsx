@@ -4,9 +4,9 @@ import {Pencil, PencilToSquare} from "@gravity-ui/icons";
 
 
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Select, Button, ListBox, TextField, Label, Input, FieldError, Modal, Surface } from "@heroui/react";
+import { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { Select, Button, ListBox, TextField, Label, Input, FieldError, Modal, Surface, toast } from "@heroui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -41,23 +41,25 @@ const FieldWrapper = ({ label, error, required, children }) => (
 
 
 export function EditModal({id, tutorDetailsData}) {
-    
+console.log("tutorDetailsData:", tutorDetailsData)
+console.log("SUBJECTS array:", SUBJECTS);
    const router = useRouter();
 
   const [form, setForm] = useState({
     tutorName: tutorDetailsData.tutorName,
     photo: tutorDetailsData.photo,
     subject: tutorDetailsData.subject,
-    availability: tutorDetailsData.availability,
-    availableTime: tutorDetailsData.availableTime,
-    feeName: tutorDetailsData.feeName,
-    seats: tutorDetailsData.seats,
+    availableDays: tutorDetailsData.availableDays,
+    availableTimeSlot: tutorDetailsData.availableTimeSlot,
+    hourlyFee: tutorDetailsData.hourlyFee,
+    totalSlot: tutorDetailsData.totalSlot,
     sessionStartDate: new Date(tutorDetailsData.sessionStartDate),
-    institutionName: tutorDetailsData.institutionName,
+    institution: tutorDetailsData.institution,
     experience: tutorDetailsData.experience,
     location: tutorDetailsData.location,
     teachingMode: tutorDetailsData.teachingMode,
   });
+  
 
   const [errors, setErrors] = useState({});
 
@@ -67,38 +69,62 @@ export function EditModal({id, tutorDetailsData}) {
   };
 
   const validate = () => {
+    console.log("validate called")
     const newErrors = {};
     const required = [
-      "tutorName", "photo", "subject", "availability",
-      "availableTime", "feeName", "seats",
-      "sessionStartDate", "institutionName", "experience",
+      "tutorName", "photo", "subject", "availableDays",
+      "availableTimeSlot", "hourlyFee", "totalSlot",
+      "sessionStartDate", "institution", "experience",
       "location", "teachingMode",
     ];
     required.forEach((f) => {
       if (!form[f] || form[f] === "") newErrors[f] = "This field is required";
+       console.log("Failed field:", f, "Value:", form[f]);
     });
-    if (form.feeName && isNaN(Number(form.feeName))) newErrors.feeName = "Must be a number";
-    if (form.seats && isNaN(Number(form.seats))) newErrors.seats = "Must be a number";
+    if (form.hourlyFee && isNaN(Number(form.hourlyFee))) newErrors.hourlyFee = "Must be a number";
+    if (form.totalSlot && isNaN(Number(form.totalSlot))) newErrors.totalSlot = "Must be a number";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+      console.log("handleSubmit called 1")
     e.preventDefault();
     console.log("Current form state:", form); // debug
+  
     if (!validate()) return;
-
+    console.log("handleSubmit called 2")
     const formData = {
       ...form,
-      feeName: Number(form.feeName),
-      seats: Number(form.seats),
+      hourlyFee: Number(form.hourlyFee),
+      totalSlot: Number(form.totalSlot),
       sessionStartDate: form.sessionStartDate
         ? form.sessionStartDate.toISOString().split("T")[0]
         : null,
     };
+    try{
+    
+   const result = await updateTutor(id, formData);
+   console.log('update result:', result)
+    console.log("handleSubmit called 3")
+     toast.success("You have Successfully edited a tutor", {
+          description: "Redirecting to tutors page...",
+          actionProps: {
+            children: "View Tutors",
+            className: "bg-success text-success-foreground",
+          
+          },
+        });
+    setTimeout( () => {  router.push("/tutors");
+        router.refresh();}, 1500)
+       
+    } catch (error){
+         console.log("handleSubmit called 4")
+        toast.warning("Failed to edit tutor", {
+              description: error?.message || "Something went wrong",
+            });
+    }
 
-    console.log("New tutor Data from client:", id, formData);
-    updateTutor(id, formData);
   };
 
   return (
@@ -183,16 +209,16 @@ export function EditModal({id, tutorDetailsData}) {
                             </div>
                           </div>
                 
-                          {/* ───── Schedule & Availability ───── */}
-                          <SectionLabel icon={Clock} label="Schedule & Availability" />
+                          {/* ───── Schedule & availableDays ───── */}
+                          <SectionLabel icon={Clock} label="Schedule & availableDays" />
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                 
-                            {/* Availability */}
-                            <FieldWrapper label="Availability" error={errors.availability} required>
+                            {/* availableDays */}
+                            <FieldWrapper label="availableDays" error={errors.availableDays} required>
                               <select
-                                value={form.availability}
-                                onChange={(e) => handleChange("availability", e.target.value)}
-                                className={`${inputBase} ${errors.availability ? inputError : ""} bg-white`}
+                                value={form.availableDays}
+                                onChange={(e) => handleChange("availableDays", e.target.value)}
+                                className={`${inputBase} ${errors.availableDays ? inputError : ""} bg-white`}
                               >
                                 <option value="">Select Days</option>
                                 {DAYS_OPTIONS.map((d) => (
@@ -202,11 +228,11 @@ export function EditModal({id, tutorDetailsData}) {
                             </FieldWrapper>
                 
                             {/* Available Time */}
-                            <FieldWrapper label="Available Time" error={errors.availableTime} required>
+                            <FieldWrapper label="Available Time" error={errors.availableTimeSlot} required>
                               <select
-                                value={form.availableTime}
-                                onChange={(e) => handleChange("availableTime", e.target.value)}
-                                className={`${inputBase} ${errors.availableTime ? inputError : ""} bg-white`}
+                                value={form.availableTimeSlot}
+                                onChange={(e) => handleChange("availableTimeSlot", e.target.value)}
+                                className={`${inputBase} ${errors.availableTimeSlot ? inputError : ""} bg-white`}
                               >
                                 {/* <option value="">04:00 PM - 06:00 PM</option> */}
                                 {TIME_SLOTS.map((slot) => (
@@ -228,15 +254,15 @@ export function EditModal({id, tutorDetailsData}) {
                               />
                             </FieldWrapper>
                 
-                            {/* Seats */}
-                            <FieldWrapper label="Seat" error={errors.seats} required>
+                            {/* totalSlot */}
+                            <FieldWrapper label="Seat" error={errors.totalSlot} required>
                               <input
                                 type="number"
                                 min={0}
-                                value={form.seats}
-                                onChange={(e) => handleChange("seats", e.target.value)}
+                                value={form.totalSlot}
+                                onChange={(e) => handleChange("totalSlot", e.target.value)}
                                 placeholder="30"
-                                className={`${inputBase} ${errors.seats ? inputError : ""}`}
+                                className={`${inputBase} ${errors.totalSlot ? inputError : ""}`}
                               />
                             </FieldWrapper>
                 
@@ -247,12 +273,12 @@ export function EditModal({id, tutorDetailsData}) {
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                 
                             {/* Institution Name */}
-                            <FieldWrapper label="Institution Name" error={errors.institutionName} required>
+                            <FieldWrapper label="Institution Name" error={errors.institution} required>
                               <input
-                                value={form.institutionName}
-                                onChange={(e) => handleChange("institutionName", e.target.value)}
+                                value={form.institution}
+                                onChange={(e) => handleChange("institution", e.target.value)}
                                 placeholder="Dhaka University"
-                                className={`${inputBase} ${errors.institutionName ? inputError : ""}`}
+                                className={`${inputBase} ${errors.institution ? inputError : ""}`}
                               />
                             </FieldWrapper>
                 
@@ -267,14 +293,14 @@ export function EditModal({id, tutorDetailsData}) {
                             </FieldWrapper>
                 
                             {/* Fee */}
-                            <FieldWrapper label="Fee (BDT)" error={errors.feeName} required>
+                            <FieldWrapper label="Fee (BDT)" error={errors.hourlyFee} required>
                               <input
                                 type="number"
                                 min={0}
-                                value={form.feeName}
-                                onChange={(e) => handleChange("feeName", e.target.value)}
+                                value={form.hourlyFee}
+                                onChange={(e) => handleChange("hourlyFee", e.target.value)}
                                 placeholder="550"
-                                className={`${inputBase} ${errors.feeName ? inputError : ""}`}
+                                className={`${inputBase} ${errors.hourlyFee ? inputError : ""}`}
                               />
                             </FieldWrapper>
                 

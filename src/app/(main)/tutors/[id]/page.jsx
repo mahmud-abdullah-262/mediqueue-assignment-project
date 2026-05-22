@@ -207,8 +207,8 @@ const {token} = await auth?.api?.getToken({
 
             {/* Action Buttons */}
         <div className="flex flex-wrap gap-3 pt-1">
+         {tutorDetailsData &&  <EditModal id={tutorDetailsData._id} tutorDetailsData={tutorDetailsData} />}
          
-          <EditModal id={tutorDetailsData._id} tutorDetailsData={tutorDetailsData} />
           <DeleteBtn id={tutorDetailsData._id} />
         </div>
           </Card.Content>

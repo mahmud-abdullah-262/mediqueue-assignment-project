@@ -65,9 +65,7 @@ export default function Footer() {
 
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 self-start px-5 py-2.5 rounded-full
-                       border-2 text-sm font-semibold transition-all duration-200
-                       hover:text-white hover:shadow-lg"
+            className="inline-flex items-center gap-2 self-start px-5 py-2.5 rounded-full border-2 text-sm font-semibold transition-all duration-200 hover:text-white hover:shadow-lg"
             style={{
               borderColor: "#7c3aed",
               color: "#7c3aed",
@@ -167,8 +165,7 @@ export default function Footer() {
                 <Chip
                   size="sm"
                   variant="flat"
-                  className="cursor-pointer transition-all duration-200
-                             hover:scale-110 hover:shadow-md"
+                  className="cursor-pointer transition-all duration-200 hover:scale-110 hover:shadow-md"
                   style={{
                     background: "#faf5ff",
                     color: "#7c3aed",
@@ -198,8 +195,7 @@ export default function Footer() {
           style={{ background: "#7c3aed" }}
         />
 
-        <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row
-                        items-start md:items-center justify-between gap-8">
+        <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="text-center mx-auto">
             <h2 className="text-4xl md:text-6xl font-black leading-tight text-text-dark/10 mb-3">
             Beyond Books, Beyond Classrooms
@@ -211,8 +207,7 @@ export default function Footer() {
 
         {/* ── Bottom Bar ──────────────────────────────────────────── */}
         <div
-          className="border-t px-6 py-4 flex flex-col sm:flex-row
-                     items-center justify-between gap-3 max-w-7xl mx-auto w-full"
+          className="border-t px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 max-w-7xl mx-auto w-full"
           style={{ borderColor: "rgba(124,58,237,0.25)" }}
         >
           <p className="text-xs" style={{ color: "#a78bfa" }}>

@@ -5,7 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { Calendar } from "@gravity-ui/icons";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import DatePicker from "react-datepicker";
-import { postBookig } from "@/actions/actions";
+import { postBooking } from "@/actions/actions";
 import { Aladin } from "next/font/google";
 
 export default function BookingBtn({ tutorDetailsData, tutorId }) {
@@ -61,7 +61,7 @@ console.log(selectedDate, minDate, 'failed validation date')
     const token = tokenData.token
     
     
-    postBookig(bookingData, token)
+    postBooking(bookingData, token)
   };
 
   return (

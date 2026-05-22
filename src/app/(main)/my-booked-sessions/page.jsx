@@ -26,7 +26,7 @@ export default async function MyBookedSessionsPage() {
   const id = user?.id;
   console.log(session, "session");
 
-  const res = await fetch(`${process.env.NEXT_MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${user?.id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_MEDIQUEUE_ASSIGNMENT_SERVER}/booking/${user?.id}`, {
      headers: {
       authorization :`Bearer ${token}`
     }
